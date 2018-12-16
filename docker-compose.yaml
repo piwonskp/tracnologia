@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/
+
+  web:
+    build: backend
+    volumes:
+      - ./backend:/opt/app
+      - /opt/app/.stack-work
+    ports:
+      - "8000:8000"
+    links:
+      - postgres
+    environment:
+      DATABASE_URL: "host=postgres dbname=postgres user=postgres password=postgres port=5432"
+      HASKELL_ENV: "development"
+      PORT: 8000
+    stdin_open: true
+    command: sleep 3600000000000
+
+  frontend:
+    build: frontend
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    links:
+      - web
+    command: yarn start
+    
+volumes:
+  pgdata:

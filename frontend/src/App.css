@@ -1,0 +1,12 @@
+.App {
+    text-align: center;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Aclonica');
+.fullwidth {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
