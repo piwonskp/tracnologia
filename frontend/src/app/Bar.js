@@ -44,8 +44,14 @@ ThemeSwitch = connect(null, dispatch => (
     {toggleTheme: () => dispatch(actions.toggleTheme())}
 ))(ThemeSwitch);
 
+const barStyle = {
+    backgroundColor: "rgba(132, 255, 255, 0.3)",
+    boxShadow: "none",
+    backdropFilter: "blur(5px)"
+};
+
 var Bar = ({toggleMenu}) =>
-    <AppBar position="sticky" color="default">
+    <AppBar position="sticky" style={barStyle}>
         <Toolbar>
             <Grid container>
                 <IconButton onClick={toggleMenu}><Menu /></IconButton>
