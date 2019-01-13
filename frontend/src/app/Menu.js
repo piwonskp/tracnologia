@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import {defaultProps} from 'recompose';
-import {Drawer, Toolbar, Typography, MenuList, ListSubheader, MenuItem,
+import {SwipeableDrawer, Toolbar, Typography, MenuList, ListSubheader, MenuItem,
         ListItemIcon, ListItemText, IconButton, Switch,
         Divider} from '@material-ui/core';
 import {Home, OfflineBolt, AddBox, Person} from '@material-ui/icons';
@@ -65,12 +65,15 @@ var Navigation = () =>
         <AdminNavigation />
     </MenuList>;
 
-var MenuLink = ({children, to}) =>
-    <Link to={to}>
+var MenuLink = ({children, to, toggleMenu}) =>
+    <Link to={to} onClick={toggleMenu}>
         <MenuItem button>
             {children}
         </MenuItem>
     </Link>;
+MenuLink = connect(undefined, dispatch => ({
+    toggleMenu: () => dispatch(toggleMenu())
+}))(MenuLink);
 
 var AddMeasureMenuItem = ({meter, openMeasureAdd}) =>
     <MenuItem button  onClick={() => openMeasureAdd(meter)}>
@@ -115,13 +118,13 @@ Meters = connect(state => ({meters: state.meters}))(Meters);
 Meters = userAuth(Meters);
 
 var Menu = ({isOpen, toggleMenu}) =>
-    <Drawer open={isOpen} onClose={toggleMenu}>
+    <SwipeableDrawer open={isOpen} onClose={toggleMenu} onOpen={toggleMenu}>
         <Logo />
         <Divider />
         <Navigation />
         <Divider />
         <Meters />
-    </Drawer>;
+    </SwipeableDrawer>;
 Menu = connect(state => ({isOpen: state.menuOpened}),
                dispatch => ({toggleMenu: () => dispatch(toggleMenu())}))(Menu);
 

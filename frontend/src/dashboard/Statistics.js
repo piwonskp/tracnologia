@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Typography, CardContent, Tabs, Tab, BottomNavigation, Card,
+import {Typography, CardContent, Tabs, Tab, BottomNavigation, Card, CardHeader,
         BottomNavigationAction} from '@material-ui/core';
 import 'react-vis/dist/style.css';
 
@@ -29,15 +29,16 @@ UserViews = UserAuth(UserViews);
 
 var StatsTabs = ({view, setView}) =>
     <Tabs value={view} onChange={(_, val) => setView(val)}>
-        <Tab label="Zużycie" />
-        <Tab label="Miesięczne" />
-        <UserTab label="Dzienne" />
+        <Tab label="W czasie" />
+        <Tab label="Roczne" />
+        <UserTab label="Tygodniowe" />
     </Tabs>;
 
 var statisticsState = {type: COLD_WATER, view: 0};
 var Statistics = ({type, view, setType, setView}) =>
     <Card>
         <CardContent>
+            <CardHeader title="Statystyki" />
             <StatsTabs view={view} setView={setView} />
             {view == 0 && Timeline()}
             {view == 1 && MonthlyUsage(type)}
